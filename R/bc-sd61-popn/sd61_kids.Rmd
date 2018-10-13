@@ -1,0 +1,35 @@
+---
+output:
+  github_document:
+    html_preview: true
+---
+
+<!-- 
+This file is licensed with the Creative Commons Attribution 4.0 International License. 
+-->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.height = 6,
+                      fig.width = 8, fig.align = 'center',
+                      warning = FALSE, message = FALSE,
+                      cache = TRUE)
+
+library(cansim) #get StatsCan data
+library(dplyr) #data munging
+library(ggplot2) #plotting
+library(gghighlight)
+```
+
+
+## Kids
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
