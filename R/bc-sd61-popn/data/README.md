@@ -1,4 +1,9 @@
 ## Data 
 
+Data was sourced from Statistics Canada and BCStats:
 
+ - **Victoria, British Columbia Population Estimates** were sourced programatically---using the [`cansim` R package](https://github.com/mountainMath/cansim)---from from Statistics Canada: [Annual demographic estimates by census metropolitan area, age and sex, based on the Standard Geographical Classification [Table: 17-10-0078-01 (formerly CANSIM  051-0056)]](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710007801). Statistics Canada data is released under the [Statistics Canada Open Licence Agreement]( https://www.statcan.gc.ca/eng/reference/licence).
 
+- **Township of Esquimalt District Municipality Population Estimates** were programatically sourced from the [BCStats Population Estimates webpage](https://www2.gov.bc.ca/gov/content?id=36D1A7A4BEE248598281824C13CB65B6). Data provided via a B.C. Government website is released under the [B.C. Crown Copyright Licence Agreement](https://www2.gov.bc.ca/gov/content/home/copyright).
+
+- **School District Population Estimates & Projections** were manually sourced from the [BCStats Population Projections webpage](https://www2.gov.bc.ca/gov/content?id=BB4112D90F38414984C25A75CC4F029B) using the [Sub-provincial Population Projections - P.E.O.P.L.E. 2018 (September 2018) online form](https://www.bcstats.gov.bc.ca/apps/PopulationProjections.aspx). To reproduce the SD61 plots, select School District---61 - Greater Victoria---All Years---Totals---5-Year Age Groups and download the output Population_Projections.csv file into the `/data` folder. Data provided via a B.C. Government website is released under the [B.C. Crown Copyright Licence Agreement](https://www2.gov.bc.ca/gov/content/home/copyright). 
