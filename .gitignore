@@ -1,3 +1,6 @@
+*.DS_Store
+*.html
+
 # History files
 .Rhistory
 .Rapp.history
