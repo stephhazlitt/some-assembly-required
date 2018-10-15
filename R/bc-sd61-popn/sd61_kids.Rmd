@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.height = 6,
 
 ## The Kids Are Coming
 
-We are in the campaign period for the British Columbia [2018 General Local Elections](https://elections.bc.ca/political-participants/local-elections-campaign-financing/2018-general-local-elections/). The recent weeks have brought many conversations with candidates running for various posts&mdash;mostly for Councillor or School Board Trustee. I have enjoyed talking with candidates about what issues motivated them to step into such important roles&mdash;the housing crisis, responsible developement, climate change mitigation & adaptation. OK, ok, nobody mentioned the climate change part, but I wish they had. 
+We are in the campaign period for the British Columbia [2018 General Local Elections](https://elections.bc.ca/political-participants/local-elections-campaign-financing/2018-general-local-elections/). The recent weeks have brought many conversations with candidates running for various posts&mdash;mostly for Councillor or School Board Trustee. I have enjoyed talking with candidates about what issues motivated them to campaign to step into such important roles&mdash;the housing crisis, responsible developement, climate change mitigation & adaptation. OK, ok, nobody mentioned the climate change part, but I wish they had. 
 
 I have lived in the Township of Esquimalt for the past 2+ years `r emo::ji("house")`. It is an amazing community&mdash;but there is always room to improve, even on amazing. I have had a fair bit to say about what is on my mind in Esquimalt, such as reducing speed limits in neighbourhood areas `r emo::ji("car")`, more and safer bike paths for family cycling `r emo::ji("bike")`, providing low income housing `r emo::ji("house")`, and, _schools_. Specifically, space in our only catchment elementary school&mdash;L'Ecole Macaulay Elementary.  
 
@@ -29,7 +29,7 @@ Esquimalt used to have 2 catchment elementary schools, Lampson Street & Macaulay
 
 Due to the recent, legal change to [revert class size & composition back to 2002 levels](https://bctf.ca/IssuesInEducation.aspx?id=5530), as well as a growing population&mdash;Macaulay has added one or more new classes in each of the 3 years I have had kids in the school, as have many elementary schools throughout the Capital Regional District. So I have been talking `r emo::ji("speaking_head")` to candidates about how Macaulay is _full_ and what is next? 
 
-I thought it would be interesting to support my talk `r emo::ji("speaking_head")` with some _data_. Also, I am always keen to work on my R programming skills `r emo::ji("woman_technologist")`. So here it goes.
+I thought it would be interesting to support my talk `r emo::ji("speaking_head")` with some _data_. Also, I am always keen to work on my [R](https://www.r-project.org/) skills `r emo::ji("woman_technologist")`. So here it goes.
 
 
 ```{r}
@@ -43,7 +43,7 @@ I thought it would be interesting to support my talk `r emo::ji("speaking_head")
 
 #### Yep, The Kids Are Coming
 
-The kid population estimate lines are going up and are predicted to continue to do so for many years to come `r emo::ji("chart_with_upwards_trend")`. In my opinion, this is an issue that should be high on the watch ` r emo::ji("eyes")` list for the Township of Esquimalt. The elementary school space crunch has aleady had community impacts throughout the Capital Regional District, displacing dedicated computer labs, after-school care situations, pre-schools. While the School District has launched the [Catchment Boundary Review](https://www.sd61.bc.ca/news-events/community/catchmentboundaryreview/)&mdash;a great step&mdash;I think it would useful for Esquimalt to start the necessary conversations, calculations and considerations around bringing a second catchment elementary school (back) on line for Esquimalt kids `r emo::ji("school")`.
+The kid population estimate lines are going up and are predicted to continue to do so for many years to come `r emo::ji("chart_with_upwards_trend")`. In my opinion, this is an issue that should be high on the watch `r emo::ji("eyes")` list for the Township of Esquimalt. The elementary school space crunch has aleady had community impacts throughout the Capital Regional District, displacing dedicated computer labs, after-school care situations, pre-schools. While the School District has launched the [Catchment Boundary Review](https://www.sd61.bc.ca/news-events/community/catchmentboundaryreview/)&mdash;a great step&mdash;I think it would useful for Esquimalt to start the necessary conversations, calculations and considerations around bringing a second catchment elementary school (back) on line for Esquimalt kids `r emo::ji("school")`.
 
 `r Sys.Date()`
 
