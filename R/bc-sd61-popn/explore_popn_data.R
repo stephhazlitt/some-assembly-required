@@ -10,8 +10,9 @@ library(curl) #pull data from web
 library(readxl) #import xls
 library(tidyr) #reshaor data frame
 library(readr) #import csv
-library(sf)
-library(bcmaps)
+library(sf) #mapping
+library(bcmaps) #get bc maps
+library(gganimate) #animate plots (package availale from GitHub, https://github.com/thomasp85/gganimate)
 
 ## Get Victoria Census Metropolitan Census Area (British Columbia) Population Estimates [Table: 17-10-0078-01 (formerly CANSIM  051-0056) 'Annual demographic estimates by census metropolitan area, age and sex, based on the Standard Geographical Classification'] from Statistics Canada.
 ## Statistics Canada Data is released under the Statistics Canada Open Licence Agreement 
@@ -21,7 +22,10 @@ library(bcmaps)
 bc_popn <- get_cansim(1710007801) %>% 
   filter(GEO == "Victoria, British Columbia",
          Sex == "Both sexes") %>% 
-  select(year = REF_DATE, age_group = `Age group`, population_estimate = VALUE) 
+  select(year = REF_DATE, age_group = `Age group`, population_estimate = VALUE) %>% 
+  mutate(year = as.integer(year))
+
+save(bc_popn, file = here("R/bc-sd61-popn/data/temp.RData"))
 
 ## YYJ population estimates
 
@@ -113,9 +117,9 @@ crd_change_spatial <- municipalities() %>%
   mutate(Name = ADMIN_AREA_ABBREVIATION) %>% 
   left_join(crd_change) %>% 
   ggplot() +
-  geom_sf(data = crd_spatial, aes(fill = percchange)) +
+  geom_sf(aes(fill = percchange)) +
   coord_sf(datum=NA) +
-  labs(title = "Percent Population Change 2014-2017 in the Capital Regional District",
+  labs(title = "Percent Population Change 2015-2017 in the Capital Regional District",
        subtitle = "Includes all ages",
        caption = "Data sourced from BC Stats Population Estimates webpage (13 October 2018)",
        y = "", x = "") +
@@ -153,55 +157,98 @@ plot(esquimalt_plot)
 sd61_kids <- read_csv("R/bc-sd61-popn/data/Population_Projections.csv") %>% 
   select(Year, "<1", "1-4", "5-9", "10-14", "15-19") %>% 
   gather(key = age_group, value = population_estimate, -Year) %>% 
-  filter(Year < 2028) %>% 
-  mutate(age_group = factor(age_group, ordered = TRUE, levels = c("<1", "1-4", "5-9", "10-14", "15-19")))
+  filter(Year < 2038) %>% 
+  mutate(age_group = factor(age_group, ordered = TRUE,
+                            levels = c("<1", "1-4", "5-9", "10-14", "15-19")),
+         data_type = case_when(Year < 2018 ~ "estimated",
+                               TRUE ~ "projected"))
 
 #plot of total sd61 kid population estimates
-sd61_kids_total <- sd61_kids %>% 
+sd61_kids_total_plot <- sd61_kids %>% 
   group_by(Year) %>% 
   summarise(population_estimate = sum(population_estimate)) %>% 
-  mutate(age_group = "Total")
-
-sd61_kids_total_2001_2017 <-  sd61_kids_total %>% 
-  filter(Year < 2018)
-
-sd61_kids_plot <- ggplot(sd61_kids_total, aes(x = Year, y = population_estimate, group = 1)) + 
-  geom_line(size = 1, colour = "#54278f", linetype = "dotted") +
-  geom_line(data = sd61_kids_total_2001_2017, aes(x = Year, y = population_estimate, group = 1),size = 1, colour = "#54278f") +
+  mutate(age_group = "Total",
+         data_type = case_when(Year <= 2017 ~ "estimated",
+                               TRUE ~ "projected")) %>% 
+  ggplot(aes(x = Year, y = population_estimate, colour = data_type, group = 1)) + 
+#  geom_line(aes(linetype = data_type), size = 1, colour = "#54278f") +
+  geom_point() +
+  geom_line(size = 1) +
   labs(title = "Population Estimates & Projections for Kids in School District 61 (Greater Victoria)",
        subtitle = "Kids include ages 0 to 19 years",
        caption = "Data sourced from BC Stats Population Projections webpage (13 October 2018)",
        y = "", x = "") +
   scale_y_continuous(limits = c(35000, 43000), breaks = seq(35000, 43000, 500), expand = c(0,0), labels = comma) +
-  scale_x_continuous(limits = c(1984, 2030), breaks = seq(1986, 2028, 2), expand = c(0,0)) +
+  scale_x_continuous(limits = c(1984, 2040), breaks = seq(1986, 2038, 4), expand = c(0,0)) +
+ # scale_linetype_discrete(name = "") +
+  scale_colour_manual(name = "", values = c("#54278f", "#9e9ac8")) +
   theme_minimal() +
-  theme(legend.position = "none",
+  theme(legend.position = c(.2,.2),
+        legend.text = element_text(size = 14),
         axis.text = element_text(size = 12),
         plot.title = element_text(size = 16),
-        panel.grid.minor = element_blank())
-plot(sd61_kids_plot)
+        panel.grid.minor = element_blank()) 
+plot(sd61_kids_total_plot)
+
+#animated version
+(sd61_kids_total_plot +
+  transition_reveal(age_group, Year)
+)
 
 #facet plot of kid population estimates in SD61 by age group
-sd61_2001_2017 <- sd61_kids %>% 
-  filter(Year < 2018)
-
-sd61_projections <- sd61_kids %>%
-  filter(Year > 2016, Year < 2029)
-
-sd61_kids_facet_plot <- ggplot() +
-  geom_line(data = sd61_2001_2017, aes(x = Year, y = population_estimate,
-                                 group = age_group, colour = age_group), size = 1, colour = "#54278f") +
-  geom_line(data = sd61_projections, aes(x = Year, y = population_estimate,
-                                  group = age_group, colour = age_group), linetype = "dotted", size = 1, colour = "#54278f") +
+sd61_kids_facet_plot <- sd61_kids %>% 
+  filter(age_group != "<1") %>% 
+  ggplot() +
+  geom_line(aes(x = Year, y = population_estimate, linetype = data_type),
+            size = 1, colour = "#54278f") +
   facet_wrap(~ age_group) +
-  scale_colour_manual(name="", values = sd61_colr_palette) +
   labs(title = "Population Estimates for Kids by Age Group in School District 61 (Greater Victoria)",
-       subtitle = "Kids include ages 0 to 19 years",
+       subtitle = "Kids include ages 1 to 19 years",
        caption = "Data sourced from BC Stats Population Projections webpage (13 October 2018)",
        y = "", x = "") +
-  scale_y_continuous(expand = c(0,0), labels = comma) +
-  scale_x_continuous(limits = c(1986, 2027), breaks = seq(1990, 2028, 4), expand = c(0,0)) +
+  scale_y_continuous(breaks = seq(6000, 13000, 1000), expand = c(0,0), labels = comma) +
+  scale_x_continuous(limits = c(1986, 2040), breaks = seq(1990, 2038, 4), expand = c(0,0)) +
+  scale_linetype_discrete(name = "") +
   theme_bw() +
-  theme(legend.position = "none",
-        plot.title = element_text(size = 16))
+  theme(legend.position = "bottom",
+        legend.text = element_text(size = 14),
+        plot.title = element_text(size = 16),
+        axis.text = element_text(size = 12)) 
 plot(sd61_kids_facet_plot)
+
+#animated version
+(sd61_kids_facet_plot +
+    transition_reveal(age_group, Year)
+)
+
+
+#Alternative plot of kid population estimates in SD61 by age group
+sd61_kids_line_plot <-  sd61_kids %>% 
+  filter(age_group != "<1") %>% 
+  ggplot(aes(Year, population_estimate, group = age_group, colour = data_type)) +
+  geom_line(size = 1) +
+  geom_segment(aes(xend = 2037 , yend = population_estimate), linetype = 2, colour = 'grey') + 
+  geom_point(size = 2) + 
+  geom_text(aes(x = 2037.1 , label = age_group), hjust = 0, colour = "#54278f") + 
+  coord_cartesian(clip = 'off') + 
+  labs(title = "Population Estimates for Kids by Age Group\nin School District 61 (Greater Victoria)",
+      # subtitle = "Kids include ages 1 to 19 years",
+       caption = "Data sourced from BC Stats Population Projections webpage (13 October 2018)",
+       y = "", x = "") +
+  theme(plot.margin = margin(5.5, 0, 5.5, 5.5)) +
+  scale_y_continuous(breaks = seq(6000, 13000, 1000), expand = c(0,0), labels = comma) +
+  scale_x_continuous(limits = c(1986, 2040), breaks = seq(1990, 2038, 4), expand = c(0,0)) +
+  scale_colour_manual(name = "", values = c("#54278f", "#9e9ac8")) +
+  scale_fill_manual(name = "", values = c("#54278f", "#9e9ac8")) +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.text = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        plot.title = element_text(size = 16))
+plot(sd61_kids_line_plot)
+
+#animated version
+sd61_kids_line_plot +
+  transition_reveal(age_group, Year)
+
+
