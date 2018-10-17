@@ -44,8 +44,6 @@ I thought it would be interesting to support this discussion with some
 *data*. Also, I am always keen to work on my
 [R](https://www.r-project.org/) skills 👩‍💻. So here it goes.
 
-<br/>
-
 #### Population Change in Victoria Census Metropolitan Area (2001-2017)
 
 Let’s start by pulling some population estimate data from Statistics
@@ -58,8 +56,8 @@ Let’s have a look 👀:
 
 <details>
 
-<summary>Click to see the R code for the Victoria CMA
-plots</summary>
+<summary><i>Click to see the R code for the Victoria CMA
+plots</i></summary>
 
 ``` r
 ## Data: Victoria Census Metropolitan Census Area (British Columbia) Population
@@ -119,8 +117,6 @@ cma_plot + cma_kids_plot
 
 </details>
 
-<br/>
-
 ![](sd61_kids_files/figure-gfm/cma-actual-plots-1.png)<!-- -->
 
 The Statistics Canada data confirms what we hear all the time, the
@@ -131,8 +127,6 @@ enrolment—and School District decisions to close schools at that time.
 However, 2014 marks a clear change—kid numbers are increasing. But what
 about in the Township of Esquimalt?
 
-<br/>
-
 #### Population Change in the Township of Esquimalt (2001-2017)
 
 I found some population data for Municipalities from
@@ -141,7 +135,8 @@ but unfortunately not by age group 😞.
 
 <details>
 
-<summary>Click to see the R code for the Esquimalt plot & map</summary>
+<summary><i>Click to see the R code for the Esquimalt plot &
+map</i></summary>
 
 ``` r
 ## Data: Esquimalt District Municipality population estimates from
@@ -228,8 +223,6 @@ esquimalt_plot + crd_change_spatial
 
 </details>
 
-<br/>
-
 ![](sd61_kids_files/figure-gfm/mun-actual-plots-1.png)<!-- -->
 
 The Township of Esquimalt population has been a bit more variable since
@@ -243,14 +236,12 @@ What I *really* want to know is how the population of *kids* is changing
 in Esquimalt. I was not able to find population-by-age data for
 Esquimalt, but I did find it for the Greater Victoria School Districts.
 
-<br/>
-
 #### Kid Population Change in School District 61-Greater Victoria
 
 <details>
 
-<summary>Click to see the R code for the SD61
-plots</summary>
+<summary><i>Click to see the R code for the SD61
+plots</i></summary>
 
 ``` r
 ## Data: School District 61 Population Estimates & Projections from BCStats manual 
@@ -318,8 +309,6 @@ sd61_kids_total_plot
 
 </details>
 
-<br/>
-
 <img src="sd61_kids_files/figure-gfm/sd61-actual-anim-1.gif" style="display: block; margin: auto;" />
 
 The School District 61 data shows a similar pattern to what we have
@@ -331,8 +320,6 @@ keeping things still really tells the
 story:
 
 <img src="sd61_kids_files/figure-gfm/sd61-actual-plots-1.png" style="display: block; margin: auto;" />
-
-<br/>
 
 #### Yep, The Kids Are Coming
 
