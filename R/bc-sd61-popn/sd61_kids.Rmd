@@ -35,9 +35,6 @@ theme_plots <- theme(axis.text = element_text(size = 8),
                      plot.title = element_text(size = 12),
                      plot.subtitle = element_text(size = 10),
                      axis.title = element_blank())
-
-#temp code
-if (!exists("bc_popn")) load(glue(path,"/temp.RData"))
 ```
 
 
@@ -66,13 +63,14 @@ Let's start by pulling some population estimate data from Statistics Canada&mdas
 ## Estimates [Table: 17-10-0078-01 (formerly CANSIM  051-0056) from Statistics Canada
 
 #get Statistics Canada data using cansim package
-# bc_popn <- get_cansim(1710007801) %>% 
-#   filter(GEO == "Victoria, British Columbia",
-#          Sex == "Both sexes") %>% 
-#   select(year = REF_DATE, age_group = `Age group`, population_estimate = VALUE) 
+bc_popn <- get_cansim(1710007801) %>%
+  filter(GEO == "Victoria, British Columbia",
+         Sex == "Both sexes") %>%
+  select(year = REF_DATE, age_group = `Age group`, population_estimate = VALUE) %>% 
+  mutate(year = as.integer(year))
 
 #make plot of Victoria CMA population estimates
-yyj_plot <- bc_popn %>% 
+cma_plot <- bc_popn %>% 
   filter(age_group == "All ages") %>% 
   ggplot(aes(x = year, y = population_estimate, group = 1)) + 
   geom_line(size = 1, colour = "#54278f") +
@@ -92,7 +90,7 @@ yyj_plot <- bc_popn %>%
 kid_ages <- c("0 to 4 years", "5 to 9 years", "10 to 14 years", "15 to 19 years")
 
 #make plot of kid Victoria CMA population estimates
-yyj_kids_plot <- bc_popn %>% 
+cma_kids_plot <- bc_popn %>% 
   filter(age_group %in% kid_ages) %>% 
   group_by(year) %>% 
   summarise(population_estimate = sum(population_estimate)) %>% 
@@ -113,7 +111,7 @@ yyj_kids_plot <- bc_popn %>%
 
 ```{r cma-plots, eval = FALSE, fig.width = 12, fig.height = 7}
 #plot the Victoria CMA plots
-yyj_plot + yyj_kids_plot
+cma_plot + cma_kids_plot
 ```
 
 </details>
@@ -122,7 +120,7 @@ yyj_plot + yyj_kids_plot
 
 ```{r cma-actual-plots, echo = FALSE, fig.width = 12, fig.height = 7}
 #plot the Victoria CMA plots
-yyj_plot + yyj_kids_plot
+cma_plot + cma_kids_plot
 ```
 
 The Statistics Canada data confirms what we hear all the time, the population in the Victoria CMA has been steadily increasing since 2001. But _not_ due to more kids&mdash;the population of 0 to 19 year olds steadily declined from 2001 until 2013-2014. This explains the decline in enrolment&mdash;and School District decisions to close schools at that time. However, 2014 marks a clear change&mdash;kid numbers are increasing. But what about in the Township of Esquimalt?
