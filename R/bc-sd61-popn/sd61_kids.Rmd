@@ -31,9 +31,10 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
 
 path <- here("R", "bc-sd61-popn", "data")
 
-theme_plots <- theme(axis.text = element_text(size = 8),
-                     plot.title = element_text(size = 12),
-                     plot.subtitle = element_text(size = 10),
+theme_plots <- theme(axis.text = element_text(size = 10),
+                     plot.title = element_text(size = 14),
+                     plot.subtitle = element_text(size = 12),
+                     plot.caption = element_text(size = 10),
                      axis.title = element_blank())
 ```
 
@@ -119,7 +120,7 @@ cma_plot + cma_kids_plot
 cma_plot + cma_kids_plot
 ```
 
-The Statistics Canada data confirms what we hear all the time, the population in the Victoria CMA has been steadily increasing since 2001. But _not_ due to more kids&mdash;the population of 0 to 19 year olds steadily declined from 2001 until 2013-2014. This explains the decline in enrolment&mdash;and School District decisions to close schools at that time. However, 2014 marks a clear change&mdash;kid numbers are increasing. But what about in the Township of Esquimalt?
+The Statistics Canada data confirms what we hear all the time, the population in the Victoria CMA has been steadily increasing since 2001. But _not_ due to more kids&mdash;the population of 0 to 19 year olds steadily declined from 2001 until 2014. This explains the decline in enrolment&mdash;and School District decisions to close schools at that time. However, 2014 brings a clear change&mdash;kid numbers start increasing. But what about in the Township of Esquimalt?
 
 #### Population Change in the Township of Esquimalt (2001-2017)
 
@@ -217,7 +218,7 @@ esquimalt_plot + crd_change_spatial
 esquimalt_plot + crd_change_spatial
 ```
 
-The Township of Esquimalt population has been a bit more variable since 2001, with a mostly declining pattern from 2006 to 2015. However, there has been an uptick in recent years. In fact, _all_ the Greater Victoria municipalities&mdash;except North Saanich&mdash;had a measurable increase in popuation over the last 2 years&mdash;Victoria a 1% increase, Esquimalt 3% and Sooke 11%! Wow, that is _a lot_.
+The Township of Esquimalt population has been a bit more variable since 2001, with a declining pattern from 2006 to 2013. However, there has been an uptick in recent years. In fact, _all_ the Greater Victoria municipalities&mdash;except North Saanich&mdash;had a measurable increase in popuation over the last 2 years&mdash;Victoria a 1% increase, Esquimalt 3% and Sooke 11%! Wow, that is _a lot_.
 
 What I _really_ want to know is how the population of _kids_ is changing in Esquimalt. I was not able to find population-by-age data for Esquimalt, but I did find it for the Greater Victoria School Districts.
 
@@ -291,15 +292,16 @@ sd61_kids_total_plot
 
 </details>
 
-```{r sd61-actual-anim, echo = FALSE, fig.width = 7, fig.height = 6, fig.align= "center"}
+```{r sd61-actual-anim, echo = FALSE, fig.width = 8, fig.height = 6, fig.align= "center"}
 #animate the sd61 age group plot
 sd61_kids_line_plot +
   transition_reveal(age_group, Year)
 ```
 
-The School District 61 data shows a similar pattern to what we have already observed&mdash; population declines for all kid age groups through the 2000s. We see the recent increases, _and_  the projected increases to come&mdash;for at least the next **15** years. I confess that while the animated plot is fun to make `r emo::ji("nerd")`, rolling the kid age groups together and keeping things still really tells the story:
+The School District 61 data shows a similar pattern to what we have already observed&mdash; population declines for all kid age groups through the 2000s. We see the recent increases, _and_  the projected increases to come&mdash;for at least the next **15** years! I confess that while the animated plot is fun to make `r emo::ji("nerd")`, rolling the kid age group populations together and keeping things still really tells the story:
 
-```{r sd61-actual-plots, echo = FALSE, fig.width = 7, fig.height = 6, fig.align= "center"}
+
+```{r sd61-actual-plots, echo = FALSE, fig.width = 8, fig.height = 6, fig.align= "center"}
 #plot the sd61 total plot
 sd61_kids_total_plot
 ```

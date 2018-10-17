@@ -122,10 +122,10 @@ cma_plot + cma_kids_plot
 The Statistics Canada data confirms what we hear all the time, the
 population in the Victoria CMA has been steadily increasing since 2001.
 But *not* due to more kids—the population of 0 to 19 year olds steadily
-declined from 2001 until 2013-2014. This explains the decline in
+declined from 2001 until 2014. This explains the decline in
 enrolment—and School District decisions to close schools at that time.
-However, 2014 marks a clear change—kid numbers are increasing. But what
-about in the Township of Esquimalt?
+However, 2014 brings a clear change—kid numbers start increasing. But
+what about in the Township of Esquimalt?
 
 #### Population Change in the Township of Esquimalt (2001-2017)
 
@@ -226,8 +226,8 @@ esquimalt_plot + crd_change_spatial
 ![](sd61_kids_files/figure-gfm/mun-actual-plots-1.png)<!-- -->
 
 The Township of Esquimalt population has been a bit more variable since
-2001, with a mostly declining pattern from 2006 to 2015. However, there
-has been an uptick in recent years. In fact, *all* the Greater Victoria
+2001, with a declining pattern from 2006 to 2013. However, there has
+been an uptick in recent years. In fact, *all* the Greater Victoria
 municipalities—except North Saanich—had a measurable increase in
 popuation over the last 2 years—Victoria a 1% increase, Esquimalt 3% and
 Sooke 11%\! Wow, that is *a lot*.
@@ -314,9 +314,9 @@ sd61_kids_total_plot
 The School District 61 data shows a similar pattern to what we have
 already observed— population declines for all kid age groups through the
 2000s. We see the recent increases, *and* the projected increases to
-come—for at least the next **15** years. I confess that while the
-animated plot is fun to make 🤓, rolling the kid age groups together and
-keeping things still really tells the
+come—for at least the next **15** years\! I confess that while the
+animated plot is fun to make 🤓, rolling the kid age group populations
+together and keeping things still really tells the
 story:
 
 <img src="sd61_kids_files/figure-gfm/sd61-actual-plots-1.png" style="display: block; margin: auto;" />
