@@ -53,7 +53,7 @@ I thought it would be interesting to support this discussion with some _data_. A
 
 #### Population Change in Victoria Census Metropolitan Area (2001-2017)
 
-Let's start by pulling some population estimate data from Statistics Canada&mdash;I found data for each Census Metropolitan Area by age group. Perfect. I had to Google to learn about what the Victoria Census Metropolitan Area (CMA) actually includes (`r emo::ji("woman_facepalming")`), turns out it includes [all of the Capital Regional District minus the Gulf Islands](https://www12.statcan.gc.ca/census-recensement/2011/as-sa/fogs-spg/Facts-cma-eng.cfm?LANG=Eng&GK=CMA&GC=935). Let's have a look `r emo::ji("eyes")`:
+Let's start by pulling some population estimate data from Statistics Canada&mdash;I found data for each Census Metropolitan Area by age group. Perfect. I had to Google to learn about what the Victoria Census Metropolitan Area (CMA) actually includes, turns out it includes [all of the Capital Regional District minus the Gulf Islands](https://www12.statcan.gc.ca/census-recensement/2011/as-sa/fogs-spg/Facts-cma-eng.cfm?LANG=Eng&GK=CMA&GC=935). Let's have a look `r emo::ji("eyes")`:
 
 <details><summary><i>Click to see the R code for the Victoria CMA plots</i></summary>
 
@@ -309,7 +309,7 @@ sd61_kids_total_plot
 
 #### Yep, The Kids Are Coming
 
-Our Esquimalt catchment elementary school is full and the kid population estimate lines are going up&mdash;and predicted to do so for at least the next 15 years `r emo::ji("chart_with_upwards_trend")`. In my opinion, a plan for the kids that are still to come should be on the to-do list `r emo::ji("scroll")` for the Township of Esquimalt. The elementary school space crunch has aleady had community impacts throughout the Capital Regional District, displacing dedicated computer labs, after-school care situations, pre-schools. The School District recently launched a [Catchment Boundary Review & Public Consultation](https://www.sd61.bc.ca/news-events/community/catchmentboundaryreview/)&mdash;a great step in supporting planning. However, with only one catchment school and one boundary, I think it is _also_ time to talk about bringing a second catchment elementary school (back) on line for Esquimalt kids `r emo::ji("school")`.
+Our Esquimalt catchment elementary school is full and the kid population estimate lines are going up&mdash;and predicted to do so for at least the next 15 years `r emo::ji("chart_with_upwards_trend")`. In my opinion, a plan for the kids that are still to come should be on the to-do list `r emo::ji("scroll")` for the Township of Esquimalt. The elementary school space crunch has already had community impacts throughout the Capital Regional District, displacing dedicated computer labs, after-school care situations, pre-schools. The School District recently launched a [Catchment Boundary Review & Public Consultation](https://www.sd61.bc.ca/news-events/community/catchmentboundaryreview/)&mdash;a great step in supporting planning. However, with only one catchment school and one boundary, I think it is _also_ time to talk about bringing a second catchment elementary school (back) on line for Esquimalt kids `r emo::ji("school")`.
 
 - Details on the data sources (e.g. website url, licences) are [here](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/bc-sd61-popn/data/README.md)
 - The R source code can be reviewed [here](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/bc-sd61-popn/sd61_kids.Rmd)

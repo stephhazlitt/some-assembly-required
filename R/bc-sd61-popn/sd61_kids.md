@@ -49,8 +49,8 @@ I thought it would be interesting to support this discussion with some
 Let’s start by pulling some population estimate data from Statistics
 Canada—I found data for each Census Metropolitan Area by age group.
 Perfect. I had to Google to learn about what the Victoria Census
-Metropolitan Area (CMA) actually includes (🤦‍♀), turns out it includes
-[all of the Capital Regional District minus the Gulf
+Metropolitan Area (CMA) actually includes, turns out it includes [all of
+the Capital Regional District minus the Gulf
 Islands](https://www12.statcan.gc.ca/census-recensement/2011/as-sa/fogs-spg/Facts-cma-eng.cfm?LANG=Eng&GK=CMA&GC=935).
 Let’s have a look 👀:
 
@@ -327,7 +327,7 @@ Our Esquimalt catchment elementary school is full and the kid population
 estimate lines are going up—and predicted to do so for at least the next
 15 years 📈. In my opinion, a plan for the kids that are still to come
 should be on the to-do list 📜 for the Township of Esquimalt. The
-elementary school space crunch has aleady had community impacts
+elementary school space crunch has already had community impacts
 throughout the Capital Regional District, displacing dedicated computer
 labs, after-school care situations, pre-schools. The School District
 recently launched a [Catchment Boundary Review & Public
