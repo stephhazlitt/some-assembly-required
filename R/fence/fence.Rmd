@@ -56,7 +56,7 @@ stns
 Looks like 3 stations for Esquimalt in the station list, however only one&mdash;`ESQUIMALT HARBOUR (52)`&mdash;is currently collecting hourly data. 
 
 ```{r stn52}
-stns %>% filter(end == 2018 & interval == "hour")
+stn52 <- stns %>% filter(end == 2018 & interval == "hour")
 ```
 
 A quick map with the `bcmaps` & `sf` R packages confirms the station (red point) is actually in Esquimalt:

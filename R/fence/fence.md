@@ -55,15 +55,8 @@ Looks like 3 stations for Esquimalt in the station list, however only
 one—`ESQUIMALT HARBOUR (52)`—is currently collecting hourly data.
 
 ``` r
-stns %>% filter(end == 2018 & interval == "hour")
+stn52 <- stns %>% filter(end == 2018 & interval == "hour")
 ```
-
-    ## # A tibble: 1 x 13
-    ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev
-    ##   <fct> <chr>        <fct>      <fct>      <fct>  <fct> <dbl> <dbl> <dbl>
-    ## 1 BC    ESQUIMALT H… 52         1012710    71798  WPF    48.4 -123.     3
-    ## # … with 4 more variables: tz <chr>, interval <chr>, start <int>,
-    ## #   end <int>
 
 A quick map with the `bcmaps` & `sf` R packages confirms the station
 (red point) is actually in Esquimalt:
