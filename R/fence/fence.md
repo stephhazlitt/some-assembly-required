@@ -55,9 +55,7 @@ Looks like 3 stations for Esquimalt in the station list, however only
 one—`ESQUIMALT HARBOUR (52)`—is currently collecting hourly data.
 
 ``` r
-stn52 <- stns %>%
-  filter(end == 2018 & interval == "hour")
-stn52
+stns %>% filter(end == 2018 & interval == "hour")
 ```
 
     ## # A tibble: 1 x 13
@@ -99,8 +97,7 @@ So let’s grab all the data for station \#52 `ESQUIMALT HARBOUR` using
 `weathercan::weather_dl()` and have a look at the wind speeds:
 
 ``` r
-#data <- weather_dl(stn)
-data <- get(load("tmp/stn52_data.RData"))
+data <- weather_dl(station_ids = 52)
 
 data %>%
   select(station_id, station_name, date, wind_spd) %>%
@@ -215,4 +212,4 @@ underway and *will* be ready for future winter weather 🇨🇦.
   - The R source code for this post can be reviewed
     [here](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/fence/fence.Rmd)
 
-2019-02-24
+2019-02-25
