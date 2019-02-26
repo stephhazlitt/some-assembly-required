@@ -1,0 +1,96 @@
+---
+output:
+  github_document:
+    html_preview: true
+---
+
+<!-- 
+This file is licensed with the Creative Commons Attribution 4.0 International License.
+-->
+
+
+```{r setup, include = FALSE}
+## get R packages
+library(dplyr)
+library(weathercan)
+library(ggplot2)
+library(envreportutils)
+library(magick)
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      cache = TRUE)
+
+stn <- stations_search(name = "Esquimalt", interval = "hour") %>% 
+  select(station_id) %>% 
+  pull()
+
+# data <- weather_dl(stn)
+# save(data, file = "tmp/stn52_data.RData")
+load("tmp/stn52_data.RData")
+```
+
+
+## When You Miss the Target `r emo::ji("dart")`
+
+
+```{r wind_data}
+wind_dir <- data %>% 
+  select(station_id, station_name, date, wind_spd, wind_dir) %>% 
+  filter(wind_spd != 0) %>% 
+  mutate(wind_spd_cat = cut(wind_spd, breaks = c(0,25,50,75),
+                            labels = c("1-25 km/h Winds",
+                                       "26-50 km/h Winds",
+                                       "51-75 km/h Winds")))
+wind_dir
+```
+
+
+```{r wind_plot}
+wind_plot <- wind_dir %>% 
+  filter(wind_dir != 0) %>% 
+  mutate(wind_dir_deg = wind_dir*10) %>% 
+  ggplot(aes(x = date, y = wind_dir_deg)) +
+  geom_point(colour = "#3182bd", alpha = .7) +
+  facet_wrap(~wind_spd_cat) +
+  theme_minimal() +
+  labs(x = NULL, y = "wind direction (degrees true)",
+       title = "Wind Direction & Average Hourly Wind Speed Measured\nat Esquimalt Harbour (1994-2019)",
+       caption = "*Data sourced from Environment Canada using the weathercan R package") +
+  scale_y_continuous(limits = c(-5, 365),
+                     breaks = seq(0, 360, 60),
+                     expand = c(0, 0)) +
+  theme(axis.text = element_text(size = 10),
+        axis.title = element_text(size = 12),
+        strip.text = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size = 12, face = "bold"),
+        plot.margin = unit(c(4,35,4,4),"mm"))
+wind_plot
+```
+
+```{r save_img, results = "hide", include = FALSE}
+png_retina(filename = "tmp/wind_dir_plot.png",
+           width = 700, height = 500)
+plot(wind_plot)
+dev.off()
+```
+
+```{r final_plot}
+wind_plot_img <- image_read("tmp/wind_dir_plot.png")
+fence_img <- image_read("images/fence.jpg")
+
+final_img <- image_composite(image_scale(wind_plot_img, "x800"),
+                             image_scale(fence_img, "x100"),
+                             offset = "+970+575")
+final_img <- image_draw(final_img)
+rect(930, 560, 1110, 725, border = "red", lty = "dashed", lwd = 3)
+final_img
+```
+
+```{r save_file, results = "hide", include = FALSE}
+image_write(final_img, "tmp/wind_dir_fence.png")
+```
+
+
+
+
+`r Sys.Date()`
