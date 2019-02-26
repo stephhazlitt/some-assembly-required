@@ -63,7 +63,7 @@ wind_plot <- wind_dir %>%
         axis.title = element_text(size = 12),
         strip.text = element_text(size = 10, face = "bold"),
         plot.title = element_text(size = 12, face = "bold"),
-        plot.margin = unit(c(4,35,4,4),"mm"))
+        plot.margin = unit(c(4,50,4,4),"mm"))
 wind_plot
 ```
 
@@ -79,10 +79,10 @@ wind_plot_img <- image_read("tmp/wind_dir_plot.png")
 fence_img <- image_read("images/fence.jpg")
 
 final_img <- image_composite(image_scale(wind_plot_img, "x800"),
-                             image_scale(fence_img, "x100"),
-                             offset = "+970+575")
+                             image_scale(fence_img, "x150"),
+                             offset = "+900+550")
 final_img <- image_draw(final_img)
-rect(930, 560, 1110, 725, border = "red", lty = "dashed", lwd = 3)
+rect(860, 540, 1110, 725, border = "red", lty = "dashed", lwd = 3)
 final_img
 ```
 
