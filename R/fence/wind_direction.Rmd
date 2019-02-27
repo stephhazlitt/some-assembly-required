@@ -20,20 +20,36 @@ library(magick)
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
                       cache = TRUE)
 
-stn <- stations_search(name = "Esquimalt", interval = "hour") %>% 
-  select(station_id) %>% 
-  pull()
-
-# data <- weather_dl(stn)
 # save(data, file = "tmp/stn52_data.RData")
-load("tmp/stn52_data.RData")
+# load("tmp/stn52_data.RData")
 ```
 
 
 ## When You Miss the Target `r emo::ji("dart")`
 
+- _Sometimes_ you can do a data analysis and not find anything that really sparks joy&mdash;no correlations, no explanatory patterns `r emo::ji("bar_chart")`
+
+- _Sometimes_ you can do a data analysis and be looking at the wrong data `r emo::ji("mag")`
+
+- _Sometimes_ nice people make suggestions where you might want to look `r emo::ji("eyes")`
+
+In my [short post](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/fence/fence.md) looking at whether average wind speeds (km/h) during the Victoria, British Columbia February 2019 storm might have explained why my fence fell down, I didn't find a "smoking gun" `r emo::ji("gun")`&mdash;the February storm perhaps lasted longer than 'usual' but measured wind speeds were within the normal range of storm wind speeds since 1994. 
+
+A number of people suggested I look at wind direction `r emo::ji("dash")`. So I did. KAPOW `r emo::ji("tada")``r emo::ji("open_mouth")` 
+
+(1) Get and wrangle the [Environment and Climate Change Canada (ECCC)](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html) [wind direction data](http://climate.weather.gc.ca/glossary_e.html#windSpd) using the the [rOpenSci](https://ropensci.org/) [`weathercan` R package](http://ropensci.github.io/weathercan/) `r emo::ji("package")`. I filtered out wind speeds of zero and grouped wind speed into a three categories (1-25 km/h, 26-50 km/h and 51-75 km/h):
 
 ```{r wind_data}
+library(weathercan)
+library(dplyr)
+library(ggplot2)
+
+stn <- stations_search(name = "Esquimalt", interval = "hour") %>% 
+  select(station_id) %>% 
+  pull()
+
+data <- weather_dl(station_id = stn)
+
 wind_dir <- data %>% 
   select(station_id, station_name, date, wind_spd, wind_dir) %>% 
   filter(wind_spd != 0) %>% 
@@ -44,8 +60,9 @@ wind_dir <- data %>%
 wind_dir
 ```
 
+(2) Plot wind direction over time for each wind speed category:
 
-```{r wind_plot}
+```{r wind_plot, fig.width = 9}
 wind_plot <- wind_dir %>% 
   filter(wind_dir != 0) %>% 
   mutate(wind_dir_deg = wind_dir*10) %>% 
@@ -74,7 +91,11 @@ plot(wind_plot)
 dev.off()
 ```
 
+(3) Get fancy with the `magick` R package `r emo::ji("package")` and overlay my sad fence picture:
+
 ```{r final_plot}
+library(magick)
+
 wind_plot_img <- image_read("tmp/wind_dir_plot.png")
 fence_img <- image_read("images/fence.jpg")
 
