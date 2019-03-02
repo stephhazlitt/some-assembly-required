@@ -31,7 +31,7 @@ wind_circle <- data %>%
   scale_y_continuous(limits = c(0, 70)) +
   labs(x = "wind direction (degrees true)",
        y = "wind speed (km/h)",
-       title = "Wind Direction for Annual Average Wind Speeds Above 50km/h\nRecorded at Esquimalt Harbour (1994-2019)",
+       title = "Wind Direction for Average Hourly Wind Speeds Above 50km/h\nRecorded at Esquimalt Harbour (1994-2019)",
        caption = "Data sourced from Environment Canada using the\nweathercan R package on February 20th 2019") +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"),
         axis.title = element_text(size = 14),
