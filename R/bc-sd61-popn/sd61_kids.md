@@ -1,63 +1,65 @@
----
-output:
-  github_document:
-    html_preview: true
----
 
 <!-- 
 This file is licensed with the Creative Commons Attribution 4.0 International License.
 -->
 
+## The Kids Are Coming, Let’s Get Ready
 
-```{r setup, include = FALSE}
-## get R packages
-library(glue) #glue strings
-library(cansim) #get StatsCan data
-library(dplyr) #data munging
-library(ggplot2) #plotting
-library(scales) #number commas
-library(here) #easier paths
-library(curl) #pull data from web
-library(readxl) #import xls
-library(tidyr) #reshape data frame
-library(readr) #import csv
-library(sf) #mapping
-library(bcmaps) #get bc maps
-library(gganimate) #animate plots (package available from GitHub, https://github.com/thomasp85/gganimate)
-library(patchwork) #side by side plots (package available from GitHub, https://github.com/thomasp85/patchwork)
+We are in the campaign period for the British Columbia [2018 General
+Local
+Elections](https://elections.bc.ca/political-participants/local-elections-campaign-financing/2018-general-local-elections/).
+I live in the Township of Esquimalt 🏙—an amazing community. However,
+there is always room to improve, even on amazing. I have enjoyed talking
+with our local government candidates, in particular about what issues
+motivated them to campaign to step into such important roles—the housing
+crisis, responsible development, community building. In turn, I have had
+a fair bit to say about issues on my mind, such as climate change ([this
+😱](https://www.ipcc.ch/news_and_events/pr_181008_P48_spm.shtml)),
+reducing speed limits in neighbourhood areas 🚗, more and safer bike
+paths for family cycling 🚲, and, *schools*. Specifically, space in our
+only catchment elementary school—[L’Ecole Macaulay
+Elementary](https://macaulay.sd61.bc.ca/).
 
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
-                      cache = TRUE)
+Esquimalt used to have 2 catchment elementary schools, Lampson Street &
+Macaulay ([Ecole
+Victor-Brodeur](https://en.wikipedia.org/wiki/%C3%89cole_Victor-Brodeur)
+is also in Esquimalt, a school that serves the francophone community).
+Lampson, a school building with [an impressive history in the
+region](https://victoriadailyphoto.blogspot.com/2013/05/lampson-street-school.html),
+was closed as a catchment elementary school in 2007 due to declining
+enrolment.
 
-path <- here("R", "bc-sd61-popn", "data")
+However, things have and are changing—and pretty *fast*.
 
-theme_plots <- theme(axis.text = element_text(size = 10),
-                     plot.title = element_text(size = 14),
-                     plot.subtitle = element_text(size = 12),
-                     plot.caption = element_text(size = 10),
-                     axis.title = element_blank())
-```
+Due to the recent, legal change to [revert class size & composition back
+to 2002 levels](https://bctf.ca/IssuesInEducation.aspx?id=5530), as well
+as a growing population—Macaulay has added one or more new classes in
+each of the 3 years I have had kids in the school, as have many
+elementary schools throughout the Capital Regional District. Macaulay
+has over 470 kids enrolled this year, so I have been talking 🗣 to
+candidates about how Macaulay is pretty *full*—and I think we need a
+plan for the kids that are still to come.
 
-
-## The Kids Are Coming, Let's Get Ready
-
-We are in the campaign period for the British Columbia [2018 General Local Elections](https://elections.bc.ca/political-participants/local-elections-campaign-financing/2018-general-local-elections/). I live in the Township of Esquimalt `r emo::ji("cityscape")`&mdash;an amazing community. However, there is always room to improve, even on amazing. I have enjoyed talking with our local government candidates, in particular about what issues motivated them to campaign to step into such important roles&mdash;the housing crisis, responsible development, community building. In turn, I have had a fair bit to say about issues on my mind, such as climate change ([this `r emo::ji("scream")`](https://www.ipcc.ch/news_and_events/pr_181008_P48_spm.shtml)), reducing speed limits in neighbourhood areas `r emo::ji("car")`, more and safer bike paths for family cycling `r emo::ji("bike")`, and, _schools_. Specifically, space in our only catchment elementary school&mdash;[L'Ecole Macaulay Elementary](https://macaulay.sd61.bc.ca/).  
-
-Esquimalt used to have 2 catchment elementary schools, Lampson Street & Macaulay ([Ecole Victor-Brodeur](https://en.wikipedia.org/wiki/%C3%89cole_Victor-Brodeur) is also in Esquimalt, a school that serves the francophone community). Lampson, a school building with [an impressive history in the region](https://victoriadailyphoto.blogspot.com/2013/05/lampson-street-school.html), was closed as a catchment elementary school in 2007 due to declining enrolment. 
-
-However, things have and are changing&mdash;and pretty _fast_. 
-
-Due to the recent, legal change to [revert class size & composition back to 2002 levels](https://bctf.ca/IssuesInEducation.aspx?id=5530), as well as a growing population&mdash;Macaulay has added one or more new classes in each of the 3 years I have had kids in the school, as have many elementary schools throughout the Capital Regional District. Macaulay has over 470 kids enrolled this year, so I have been talking `r emo::ji("speaking_head")` to candidates about how Macaulay is pretty _full_&mdash;and I think we need a plan for the kids that are still to come.
-
-I thought it would be interesting to support this discussion with some _data_. Also, I am always keen to work on my [R](https://www.r-project.org/) skills `r emo::ji("woman_technologist")`. So here it goes.
+I thought it would be interesting to support this discussion with some
+*data*. Also, I am always keen to work on my
+[R](https://www.r-project.org/) skills 👩‍💻. So here it goes.
 
 #### Population Change in Victoria Census Metropolitan Area (2001-2017)
 
-Let's start by pulling some population estimate data from Statistics Canada&mdash;I found data for each Census Metropolitan Area by age group. Perfect. I had to Google to learn about what the Victoria Census Metropolitan Area (CMA) actually includes, turns out it includes [all of the Capital Regional District minus the Gulf Islands](https://www12.statcan.gc.ca/census-recensement/2011/as-sa/fogs-spg/Facts-cma-eng.cfm?LANG=Eng&GK=CMA&GC=935). Let's have a look `r emo::ji("eyes")`:
+Let’s start by pulling some population estimate data from Statistics
+Canada—I found data for each Census Metropolitan Area by age group.
+Perfect. I had to Google to learn about what the Victoria Census
+Metropolitan Area (CMA) actually includes, turns out it includes [all of
+the Capital Regional District minus the Gulf
+Islands](https://www12.statcan.gc.ca/census-recensement/2011/as-sa/fogs-spg/Facts-cma-eng.cfm?LANG=Eng&GK=CMA&GC=935).
+Let’s have a look 👀:
 
-<details><summary><i>Click to see the R code for the Victoria CMA plots</i></summary>
+<details>
 
-```{r cma}
+<summary><i>Click to see the R code for the Victoria CMA
+plots</i></summary>
+
+``` r
 ## Data: Victoria Census Metropolitan Census Area (British Columbia) Population
 ## Estimates [Table: 17-10-0078-01 (formerly CANSIM  051-0056) from Statistics Canada
 
@@ -108,27 +110,35 @@ cma_kids_plot <- bc_popn %>%
   theme_plots
 ```
 
-```{r cma-plots, eval = FALSE, fig.width = 12, fig.height = 7}
+``` r
 #plot the Victoria CMA plots
 cma_plot + cma_kids_plot
 ```
 
 </details>
 
-```{r cma-actual-plots, echo = FALSE, fig.width = 12, fig.height = 7}
-#plot the Victoria CMA plots
-cma_plot + cma_kids_plot
-```
+![](sd61_kids_files/figure-gfm/cma-actual-plots-1.png)<!-- -->
 
-The Statistics Canada data confirms what we hear all the time, the population in the Victoria CMA has been steadily increasing since 2001. But _not_ due to more kids&mdash;the population of 0 to 19 year olds steadily declined from 2001 until 2014. This explains the decline in enrolment&mdash;and School District decisions to close schools at that time. However, 2014 brings a clear change&mdash;kid numbers start increasing. But what about in the Township of Esquimalt?
+The Statistics Canada data confirms what we hear all the time, the
+population in the Victoria CMA has been steadily increasing since 2001.
+But *not* due to more kids—the population of 0 to 19 year olds steadily
+declined from 2001 until 2014. This explains the decline in
+enrolment—and School District decisions to close schools at that time.
+However, 2014 brings a clear change—kid numbers start increasing. But
+what about in the Township of Esquimalt?
 
 #### Population Change in the Township of Esquimalt (2001-2017)
 
-I found some population data for Municipalities from [BCStats](https://www2.gov.bc.ca/gov/content?id=36D1A7A4BEE248598281824C13CB65B6), but unfortunately not by age group `r emo::ji("disappointed")`.
+I found some population data for Municipalities from
+[BCStats](https://www2.gov.bc.ca/gov/content?id=36D1A7A4BEE248598281824C13CB65B6),
+but unfortunately not by age group 😞.
 
-<details><summary><i>Click to see the R code for the Esquimalt plot & map</i></summary>
+<details>
 
-```{r mun}
+<summary><i>Click to see the R code for the Esquimalt plot &
+map</i></summary>
+
+``` r
 ## Data: Esquimalt District Municipality population estimates from
 ## BCStats Population Estimates webpage
 
@@ -206,27 +216,34 @@ crd_change_spatial <- municipalities() %>%
   theme_plots
 ```
 
-```{r mun-plots, eval = FALSE,  fig.width = 10, fig.height = 7}
+``` r
 #plot the Esquimalt plots
 esquimalt_plot + crd_change_spatial
 ```
 
 </details>
 
-```{r mun-actual-plots, echo = FALSE,  fig.width = 10, fig.height = 7}
-#plot the Esquimalt plots
-esquimalt_plot + crd_change_spatial
-```
+![](sd61_kids_files/figure-gfm/mun-actual-plots-1.png)<!-- -->
 
-The Township of Esquimalt population has been a bit more variable since 2001, with a declining pattern from 2006 to 2013. However, there has been an uptick in recent years. In fact, _all_ the Greater Victoria municipalities&mdash;except North Saanich&mdash;had a measurable increase in popuation over the last 2 years&mdash;Victoria a 1% increase, Esquimalt 3% and Sooke 11%! Wow, that is _a lot_.
+The Township of Esquimalt population has been a bit more variable since
+2001, with a declining pattern from 2006 to 2013. However, there has
+been an uptick in recent years. In fact, *all* the Greater Victoria
+municipalities—except North Saanich—had a measurable increase in
+popuation over the last 2 years—Victoria a 1% increase, Esquimalt 3% and
+Sooke 11%\! Wow, that is *a lot*.
 
-What I _really_ want to know is how the population of _kids_ is changing in Esquimalt. I was not able to find population-by-age data for Esquimalt, but I did find it for the Greater Victoria School Districts.
+What I *really* want to know is how the population of *kids* is changing
+in Esquimalt. I was not able to find population-by-age data for
+Esquimalt, but I did find it for the Greater Victoria School Districts.
 
 #### Kid Population Change in School District 61-Greater Victoria
 
-<details><summary><i>Click to see the R code for the SD61 plots</i></summary>
+<details>
 
-```{r sd61}
+<summary><i>Click to see the R code for the SD61
+plots</i></summary>
+
+``` r
 ## Data: School District 61 Population Estimates & Projections from BCStats manual 
 ## online tool: https://www.bcstats.gov.bc.ca/apps/PopulationProjections.aspx
 
@@ -281,7 +298,7 @@ sd61_kids_total_plot <- sd61_kids %>%
         legend.text = element_text(size = 12)) 
 ```
 
-```{r sd61-plots, eval = FALSE, fig.width = 7, fig.height = 6, fig.align= "center"}
+``` r
 #animate the sd61 age group plot
 sd61_kids_line_plot +
   transition_reveal(age_group, Year)
@@ -292,29 +309,41 @@ sd61_kids_total_plot
 
 </details>
 
-```{r sd61-actual-anim, echo = FALSE, fig.width = 8, fig.height = 6, fig.align= "center"}
-#animate the sd61 age group plot
-sd61_kids_line_plot +
-  transition_reveal(age_group, Year)
-```
+<img src="sd61_kids_files/figure-gfm/sd61-actual-anim-1.gif" style="display: block; margin: auto;" />
 
-The School District 61 data shows a similar pattern to what we have already observed&mdash; population declines for all kid age groups through the 2000s. We see the recent increases, _and_  the projected increases to come&mdash;for at least the next **15** years! I confess that while the animated plot is fun to make `r emo::ji("nerd")`, rolling the kid age group populations together and keeping things still really tells the story:
+The School District 61 data shows a similar pattern to what we have
+already observed— population declines for all kid age groups through the
+2000s. We see the recent increases, *and* the projected increases to
+come—for at least the next **15** years\! I confess that while the
+animated plot is fun to make 🤓, rolling the kid age group populations
+together and keeping things still really tells the
+story:
 
-
-```{r sd61-actual-plots, echo = FALSE, fig.width = 8, fig.height = 6, fig.align= "center"}
-#plot the sd61 total plot
-sd61_kids_total_plot
-```
-
+<img src="sd61_kids_files/figure-gfm/sd61-actual-plots-1.png" style="display: block; margin: auto;" />
 
 #### Yep, The Kids Are Coming
 
-Our Esquimalt catchment elementary school is full and the kid population estimate lines are going up&mdash;and predicted to do so for at least the next 15 years `r emo::ji("chart_with_upwards_trend")`. In my opinion, a plan for the kids that are still to come should be on the to-do list `r emo::ji("scroll")` for the Township of Esquimalt. The elementary school space crunch has already had community impacts throughout the Capital Regional District, displacing dedicated computer labs, after-school care situations, pre-schools. The School District recently launched a [Catchment Boundary Review & Public Consultation](https://www.sd61.bc.ca/news-events/community/catchmentboundaryreview/)&mdash;a great step in supporting planning. However, with only one catchment school and one boundary, I think it is _also_ time to talk about bringing a second catchment elementary school (back) on line for Esquimalt kids `r emo::ji("school")`.
+Our Esquimalt catchment elementary school is full and the kid population
+estimate lines are going up—and predicted to do so for at least the next
+15 years 📈. In my opinion, a plan for the kids that are still to come
+should be on the to-do list 📜 for the Township of Esquimalt. The
+elementary school space crunch has already had community impacts
+throughout the Capital Regional District, displacing dedicated computer
+labs, after-school care situations, pre-schools. The School District
+recently launched a [Catchment Boundary Review & Public
+Consultation](https://www.sd61.bc.ca/news-events/community/catchmentboundaryreview/)—a
+great step in supporting planning. However, with only one catchment
+school and one boundary, I think it is *also* time to talk about
+bringing a second catchment elementary school (back) on line for
+Esquimalt kids 🏫.
 
-- Details on the data sources (e.g. website url, licences) are [here](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/bc-sd61-popn/data/README.md)
-- The R source code can be reviewed [here](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/bc-sd61-popn/sd61_kids.Rmd)
-- Learn more about the CRD & Township of Esquimalt candidates  [here](https://www.timescolonist.com/elections)
-- Don't forget to get out and [**VOTE on October 20th, 2018**](https://www.esquimalt.ca/municipal-hall/elections/2018-election/information-voters) 
+  - Details on the data sources (e.g. website url, licences) are
+    [here](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/bc-sd61-popn/data/README.md)
+  - The R source code can be reviewed
+    [here](https://github.com/stephhazlitt/some-assembly-required/blob/master/R/bc-sd61-popn/sd61_kids.Rmd)
+  - Learn more about the CRD & Township of Esquimalt candidates
+    [here](https://www.timescolonist.com/elections)
+  - Don’t forget to get out and [**VOTE on
+    October 20th, 2018**](https://www.esquimalt.ca/municipal-hall/elections/2018-election/information-voters)
 
-`r Sys.Date()`
-
+2018-10-16

@@ -1,3 +1,6 @@
+*.DS_Store
+*.html
+
 # History files
 .Rhistory
 .Rapp.history
@@ -35,3 +38,7 @@ vignettes/*.pdf
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
 .Rproj.user
+R/bc-sd61-popn/sd61_kids_cache/
+R/fence/fence_cache/
+R/fence/tmp
+R/fence/wind_direction_cache/

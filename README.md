@@ -1,9 +1,10 @@
 
 ## Some Thoughts & Maybe Some Code 👩‍💻
 
-A place for some thoughts related to learning & teaching
+A place for some thoughts, mostly related to learning & teaching
 [R](https://www.r-project.org/) & the [R
-Ecosystem](http://fg2re.sellorm.com/).
+Ecosystem](http://fg2re.sellorm.com/)—but also some other stuff as
+well.
 
 #### Licence
 
