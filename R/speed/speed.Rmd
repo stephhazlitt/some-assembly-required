@@ -12,6 +12,7 @@ This file is licensed with the Creative Commons Attribution 4.0 International Li
 ```{r setup, include = FALSE}
 ## get R packages
 
+library(readr)
 library(dplyr) #data munging
 library(ggplot2) #plotting
 
@@ -19,3 +20,10 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRU
 ```
 
 ## Speed
+
+```{r get-data}
+
+data <- read_csv("data/Traffic Data 11-7-2019.csv")
+
+```
+
