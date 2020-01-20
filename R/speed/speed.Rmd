@@ -1,0 +1,21 @@
+---
+output:
+  github_document:
+    html_preview: true
+---
+
+<!-- 
+This file is licensed with the Creative Commons Attribution 4.0 International License.
+-->
+
+
+```{r setup, include = FALSE}
+## get R packages
+
+library(dplyr) #data munging
+library(ggplot2) #plotting
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE)
+```
+
+## Speed
