@@ -12,8 +12,10 @@ This file is licensed with the Creative Commons Attribution 4.0 International Li
 ```{r setup, include = FALSE}
 ## get R packages
 
-library(readr)
+library(readr) # read in csv file
 library(dplyr) #data munging
+library(janitor) #data cleaning
+library(lubridate)
 library(ggplot2) #plotting
 
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE)
@@ -22,8 +24,19 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRU
 ## Speed
 
 ```{r get-data}
+data_all <- read_csv("data/Traffic Data 11-7-2019.csv") 
 
-data <- read_csv("data/Traffic Data 11-7-2019.csv")
+data_all_tidy <- data_all %>% 
+  clean_names() %>% 
+  mutate(start_dt = as.POSIXct(start),
+         date = as_date(start_dt),
+         time = format(start_dt, "%H:%M")) %>% 
+  select(date, time, everything())
+
+data_mystreet <- data_all_tidy %>% 
+  filter(date >= "2019-09-06")
 
 ```
 
+
+`r Sys.Date()`
