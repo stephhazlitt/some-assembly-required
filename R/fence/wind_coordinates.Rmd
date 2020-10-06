@@ -1,0 +1,68 @@
+---
+output:
+  github_document:
+    html_preview: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(weathercan)
+library(dplyr)
+library(ggplot2)
+
+load(here::here("/R/fence/tmp/stn52_data.RData"))
+```
+
+
+```{r, include=FALSE}
+wind_dir <- data %>% 
+  select(station_id, station_name, date, wind_spd, wind_dir) %>% 
+  filter(
+    date < "2019-02-10",
+    wind_spd != 0
+    ) %>% 
+  tidyr::drop_na(wind_spd, wind_dir) %>% 
+  mutate(wind_spd_cat = cut(wind_spd, breaks = c(0,25,50,75),
+                            labels = c("1-25 km/h Winds",
+                                       "26-50 km/h Winds",
+                                       "51-75 km/h Winds")))
+wind_dir 
+```
+
+4. Or get fancy in a different way by using a polar coordinate system 🤓:
+
+```{r, fig.width=9, fig.height=5}
+wind_circle_facet <- wind_dir %>% 
+  filter(wind_dir != 0) %>% 
+  mutate(wind_dir_deg = wind_dir*10,
+         event = case_when(date == "2019-02-09" ~ "Feb 9th 2019",
+                           TRUE ~ "1994 to Feb 8th 2019")) %>% 
+  ggplot(aes(x = wind_dir_deg, y = wind_spd, group = event, colour = event)) +
+  geom_point(alpha = .7, size = 2, position = "jitter") +
+  coord_polar() +
+  theme_minimal() +
+  facet_wrap(~wind_spd_cat) +
+  scale_colour_manual(name = NULL,
+                      values = c("Feb 9th 2019" = "red",
+                                  "1994 to Feb 8th 2019" = "#3182bd")) +
+  scale_x_continuous(
+                     breaks = c(360, 90, 180, 270),
+                     labels = c("North\n(360)", "East\n(90)", "South\n(180)", "West\n(270)")) +
+  scale_y_continuous(limits = c(0, 70)) +
+  labs(x = "wind direction (degrees true)",
+       y = "wind speed (km/h)",
+       title = "Wind Direction for Average Hourly Wind Speeds\nRecorded at Esquimalt Harbour (1994-2019)") +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 8),
+        axis.title = element_text(size = 8),
+        axis.text = element_text(size = 5),
+        strip.text = element_text(size = 7, face = "bold"),
+        legend.text = element_text(size = 6))
+wind_circle_facet
+```
+
+
+```{r save_file, results = "hide", include = FALSE}
+ggsave(filename = here::here("R/fence/tmp/wind_coord_facet_plot.png"),
+       plot = wind_circle_facet)
+```
