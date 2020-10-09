@@ -64,5 +64,7 @@ wind_circle_facet
 
 ```{r save_file, results = "hide", include = FALSE}
 ggsave(filename = here::here("R/fence/tmp/wind_coord_facet_plot.png"),
-       plot = wind_circle_facet)
+       plot = wind_circle_facet,
+       dpi = "retina",
+       width = 18, height = 6, units = "cm")
 ```
